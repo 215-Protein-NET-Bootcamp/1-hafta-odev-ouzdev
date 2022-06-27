@@ -1,3 +1,7 @@
+using CurrencyConverterAPI.Adapters.ExchangeRatesService.Abstract;
+using CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate;
+using Microsoft.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpClient("ExchangeRateData", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://api.apilayer.com/exchangerates_data/");
+    httpClient.DefaultRequestHeaders.Add("apikey", builder.Configuration["CurrencyConverterService:APIKEY"]);
+}); 
+
+builder.Services.AddScoped<IExchangeRateService, ExchangeRateManager>();
 
 var app = builder.Build();
 
