@@ -20,7 +20,7 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
             var httpResponseMessage = await httpClient.GetAsync($"convert?to={query.To}&from={query.From}&amount={query.Amount}");
             if (httpResponseMessage.IsSuccessStatusCode)
-            { 
+            {
                 var contentStream =
                    await httpResponseMessage.Content.ReadAsStreamAsync();
 
@@ -38,24 +38,24 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
                 return new ExchangeRateResponse();
             }
 
-           
+
         }
-        public async Task<ExchangeLatestResponse> LatestCurrency()
+        public async Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrency)
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
-            var httpResponseMessage = await httpClient.GetAsync($"latest?symbols=&base=TRY");
+            var httpResponseMessage = await httpClient.GetAsync($"latest?symbols=&base={baseCurrency}");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var contentStream =
                    await httpResponseMessage.Content.ReadAsStreamAsync();
-
-                var response = await JsonSerializer.DeserializeAsync<ExchangeLatestResponse>(contentStream);
-                if (response != null)
+                var parseObject = JsonDocument.Parse(contentStream);
+                var baseCurrencyResponse = JsonSerializer.Deserialize<string>(parseObject.RootElement.GetProperty("base"));
+                var ratesResponse = JsonSerializer.Deserialize<IDictionary<string, double>>(parseObject.RootElement.GetProperty("rates"));
+                return new ExchangeLatestResponse
                 {
-                    return response;
-
-                }
-                return new ExchangeLatestResponse();
+                    Base = baseCurrencyResponse,
+                    Rates = ratesResponse
+                };
 
             }
             else
@@ -64,28 +64,20 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
             }
         }
 
-        public async Task<SupportedCurrencyResponse> SupportedCurrencies()
+        public async Task<IDictionary<string, string>> GetSupportedCurrencies()
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
             var httpResponseMessage = await httpClient.GetAsync($"symbols");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
-                var contentStream =
-                   await httpResponseMessage.Content.ReadAsStreamAsync();
-
-                var response = await JsonSerializer.DeserializeAsync<SupportedCurrencyResponse>(contentStream);
-                if (response != null)
-                {
-                    return response;
-
-                }
-                return new SupportedCurrencyResponse();
-
+                string contentStream = await httpResponseMessage.Content.ReadAsStringAsync();
+                var parseObject = JsonDocument.Parse(contentStream);
+                var symbols = JsonSerializer.Deserialize<IDictionary<string,string>>(parseObject.RootElement.GetProperty("symbols"));
+                #pragma warning disable CS8603 // Possible null reference return.
+                return symbols;
+                #pragma warning restore CS8603 // Possible null reference return.
             }
-            else
-            {
-                return new SupportedCurrencyResponse();
-            }
+            return null;
         }
     }
 }

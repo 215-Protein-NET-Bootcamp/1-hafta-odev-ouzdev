@@ -25,16 +25,15 @@ namespace CurrencyConverterAPI.Controllers
             return response;
         }
         [HttpPost("LatestCurrency")]
-        public async Task<ExchangeLatestResponse> LatestCurrency([FromQuery] string baseCurrency,List<string> targetCurrencies)
+        public async Task<ExchangeLatestResponse> LatestCurrency([FromQuery] string baseCurrency)
         {
-            var response = await exchangeRateService.LatestCurrency();
-
+            var response = await exchangeRateService.GetLatestCurrency(baseCurrency);
             return response;
         }
         [HttpGet("SupporrtedCurrencies")]
-        public async Task<SupportedCurrencyResponse> SupportedCurrencies()
+        public async Task<IDictionary<string, string>> SupportedCurrencies()
         {
-            var response = await exchangeRateService.SupportedCurrencies();
+            var response = await exchangeRateService.GetSupportedCurrencies();
             return response;
         }
     }
