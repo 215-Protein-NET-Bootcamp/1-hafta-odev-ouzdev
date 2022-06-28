@@ -1,7 +1,5 @@
 ﻿using CurrencyConverterAPI.Adapters.ExchangeRatesService.Abstract;
 using CurrencyConverterAPI.Models.Dtos.ConvertCurrencyDtos;
-using CurrencyConverterAPI.Models.Dtos.SupportedCurrencyDtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyConverterAPI.Controllers
@@ -18,16 +16,17 @@ namespace CurrencyConverterAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ExchangeRateResponse> ConvertCurrency([FromQuery]ConvertQueryDto dto)
+        public async Task<ExchangeRateResponse> ConvertCurrency([FromQuery]ConvertCurrencyRate currencyRate)
         {
-
-            var response = await exchangeRateService.ConvertCurrency(dto);
+            var response = await exchangeRateService.ConvertCurrency(currencyRate);
             return response;
         }
+
+
         [HttpPost("LatestCurrency")]
-        public async Task<ExchangeLatestResponse> LatestCurrency([FromQuery] string baseCurrency)
+        public async Task<ExchangeLatestResponse> LatestCurrency([FromQuery] string baseCurrency,params string[] symbols)
         {
-            var response = await exchangeRateService.GetLatestCurrency(baseCurrency);
+            var response = await exchangeRateService.GetLatestCurrency(baseCurrency, symbols);
             return response;
         }
         [HttpGet("SupporrtedCurrencies")]

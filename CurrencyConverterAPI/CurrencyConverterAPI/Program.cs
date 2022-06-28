@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient("ExchangeRateData", httpClient =>
 {
-    httpClient.BaseAddress = new Uri("https://api.apilayer.com/exchangerates_data/");
+    httpClient.BaseAddress = new Uri(builder.Configuration["CurrencyConverterService:APIURL"]);
     httpClient.DefaultRequestHeaders.Add("apikey", builder.Configuration["CurrencyConverterService:APIKEY"]);
 }); 
 
