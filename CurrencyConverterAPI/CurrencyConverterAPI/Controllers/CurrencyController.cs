@@ -1,5 +1,5 @@
-﻿using CurrencyConverterAPI.Adapters.ExchangeRatesService.Abstract;
-using CurrencyConverterAPI.Models.Dtos.ConvertCurrencyDtos;
+﻿using CurrencyConverterAPI.Adapters.ExchangeRatesService;
+using CurrencyConverterAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyConverterAPI.Controllers

@@ -1,5 +1,4 @@
-using CurrencyConverterAPI.Adapters.ExchangeRatesService.Abstract;
-using CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate;
+using CurrencyConverterAPI.Adapters.ExchangeRatesService;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,8 +1,7 @@
-﻿using CurrencyConverterAPI.Adapters.ExchangeRatesService.Abstract;
-using CurrencyConverterAPI.Models.Dtos.ConvertCurrencyDtos;
+﻿using CurrencyConverterAPI.Models;
 using System.Text.Json;
 
-namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
+namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
 {
     public class ExchangeRateManager : IExchangeRateService
     {
@@ -21,14 +20,14 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
             {
                 var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
                 var parseObject = JsonDocument.Parse(contentStream);
-                var res = JsonSerializer.Deserialize<double>(parseObject.RootElement.GetProperty("result"));
+                var res = parseObject.RootElement.GetProperty("result").Deserialize<double>();
 
                 return new ExchangeRateResponse
                 {
                     From = currencyRate.From,
                     To = currencyRate.To,
                     CalculatedRate = res
-        
+
 
                 };
 
@@ -40,7 +39,7 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
 
 
         }
-        public async Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrency,string symbols)
+        public async Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrency, string symbols)
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
             var httpResponseMessage = await httpClient.GetAsync($"latest?symbols={symbols}&base={baseCurrency}");
@@ -48,8 +47,8 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
             {
                 var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
                 var parseObject = JsonDocument.Parse(contentStream);
-                var baseCurrencyResponse = JsonSerializer.Deserialize<string>(parseObject.RootElement.GetProperty("base"));
-                var ratesResponse = JsonSerializer.Deserialize<IDictionary<string, double>>(parseObject.RootElement.GetProperty("rates"));
+                var baseCurrencyResponse = parseObject.RootElement.GetProperty("base").Deserialize<string>();
+                var ratesResponse = parseObject.RootElement.GetProperty("rates").Deserialize<IDictionary<string, double>>();
                 return new ExchangeLatestResponse
                 {
                     Base = baseCurrencyResponse,
@@ -71,7 +70,7 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
             {
                 string contentStream = await httpResponseMessage.Content.ReadAsStringAsync();
                 var parseObject = JsonDocument.Parse(contentStream);
-                var symbols = JsonSerializer.Deserialize<IDictionary<string,string>>(parseObject.RootElement.GetProperty("symbols"));
+                var symbols = parseObject.RootElement.GetProperty("symbols").Deserialize<IDictionary<string, string>>();
                 return symbols;
             }
             return null;

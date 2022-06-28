@@ -1,4 +1,4 @@
-﻿namespace CurrencyConverterAPI.Models.Dtos.ConvertCurrencyDtos
+﻿namespace CurrencyConverterAPI.Models
 {
     public class ConvertCurrencyRate
     {
