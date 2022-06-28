@@ -5,7 +5,7 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Abstract
     public interface IExchangeRateService
     {
         Task<ExchangeRateResponse> ConvertCurrency(ConvertCurrencyRate currencyRate);
-        Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrancy,params string[] symbols);
+        Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrancy,string symbols);
         Task<IDictionary<string, string>> GetSupportedCurrencies();
     }
 }

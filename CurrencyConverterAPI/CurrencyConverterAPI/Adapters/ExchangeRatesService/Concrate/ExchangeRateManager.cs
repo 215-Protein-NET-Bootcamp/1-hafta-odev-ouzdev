@@ -40,10 +40,10 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService.Concrate
 
 
         }
-        public async Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrency,params string[] symbols)
+        public async Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrency,string symbols)
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
-            var httpResponseMessage = await httpClient.GetAsync($"latest?symbols={String.Join(",",symbols)}&base={baseCurrency}");
+            var httpResponseMessage = await httpClient.GetAsync($"latest?symbols={symbols}&base={baseCurrency}");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();

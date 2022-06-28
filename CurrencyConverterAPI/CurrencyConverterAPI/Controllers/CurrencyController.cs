@@ -24,7 +24,7 @@ namespace CurrencyConverterAPI.Controllers
 
 
         [HttpPost("LatestCurrency")]
-        public async Task<ExchangeLatestResponse> LatestCurrency([FromQuery] string baseCurrency,params string[] symbols)
+        public async Task<ExchangeLatestResponse> LatestCurrency([FromQuery] string baseCurrency,string? symbols)
         {
             var response = await exchangeRateService.GetLatestCurrency(baseCurrency, symbols);
             return response;
