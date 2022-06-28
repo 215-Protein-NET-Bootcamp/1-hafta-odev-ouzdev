@@ -16,24 +16,27 @@ namespace CurrencyConverterAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ExchangeRateResponse> ConvertCurrency([FromQuery]ConvertCurrencyRate currencyRate)
+        public async Task<IActionResult> ConvertCurrency([FromQuery]ConvertCurrencyRate currencyRate)
         {
             var response = await exchangeRateService.ConvertCurrency(currencyRate);
-            return response;
+
+            return response.Success ? Ok(response) : BadRequest(response);
         }
 
 
         [HttpPost("LatestCurrency")]
-        public async Task<ExchangeLatestResponse> LatestCurrency([FromQuery] string baseCurrency,string? symbols)
+        public async Task<IActionResult> LatestCurrency([FromQuery] string baseCurrency,string? symbols)
         {
             var response = await exchangeRateService.GetLatestCurrency(baseCurrency, symbols);
-            return response;
+
+            return response.Success ? Ok(response) : BadRequest(response);
         }
         [HttpGet("SupporrtedCurrencies")]
-        public async Task<IDictionary<string, string>> SupportedCurrencies()
+        public async Task<IActionResult> SupportedCurrencies()
         {
             var response = await exchangeRateService.GetSupportedCurrencies();
-            return response;
+
+            return response.Success ? Ok(response) : BadRequest(response);
         }
     }
 }

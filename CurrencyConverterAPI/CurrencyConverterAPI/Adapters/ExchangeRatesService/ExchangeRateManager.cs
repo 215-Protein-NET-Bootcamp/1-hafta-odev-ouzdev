@@ -1,4 +1,5 @@
 ﻿using CurrencyConverterAPI.Models;
+using CurrencyConverterAPI.Utilities.Result;
 using System.Text.Json;
 
 namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
@@ -11,7 +12,8 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
         {
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<ExchangeRateResponse> ConvertCurrency(ConvertCurrencyRate currencyRate)
+
+        public async Task<IDataResult<ExchangeRateResponse>> ConvertCurrency(ConvertCurrencyRate currencyRate)
         {
 
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
@@ -20,26 +22,15 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
             {
                 var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
                 var parseObject = JsonDocument.Parse(contentStream);
-                var res = parseObject.RootElement.GetProperty("result").Deserialize<double>();
-
-                return new ExchangeRateResponse
-                {
-                    From = currencyRate.From,
-                    To = currencyRate.To,
-                    CalculatedRate = res
-
-
-                };
-
+                var result = parseObject.RootElement.GetProperty("result").Deserialize<double>();
+                
+                return new SuccessDataResult<ExchangeRateResponse>(new ExchangeRateResponse { CalculatedRate = result,From = currencyRate.From,To=currencyRate.To },"Kur Hesaplaması Başarılı");
             }
-            else
-            {
-                return new ExchangeRateResponse();
-            }
-
-
+            
+            return new ErrorDataResult<ExchangeRateResponse>("Kur Hesaplanamadı");
         }
-        public async Task<ExchangeLatestResponse> GetLatestCurrency(string baseCurrency, string symbols)
+
+        public async Task<IDataResult<ExchangeLatestResponse>> GetLatestCurrency(string baseCurrency, string? symbols)
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
             var httpResponseMessage = await httpClient.GetAsync($"latest?symbols={symbols}&base={baseCurrency}");
@@ -49,20 +40,15 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
                 var parseObject = JsonDocument.Parse(contentStream);
                 var baseCurrencyResponse = parseObject.RootElement.GetProperty("base").Deserialize<string>();
                 var ratesResponse = parseObject.RootElement.GetProperty("rates").Deserialize<IDictionary<string, double>>();
-                return new ExchangeLatestResponse
-                {
-                    Base = baseCurrencyResponse,
-                    Rates = ratesResponse
-                };
+
+                return new SuccessDataResult<ExchangeLatestResponse>(new ExchangeLatestResponse { Base=baseCurrencyResponse,Rates=ratesResponse }, "Seçilen Kura Göre Kurlar Hesaplandı");
 
             }
-            else
-            {
-                return new ExchangeLatestResponse();
-            }
+
+            return new ErrorDataResult<ExchangeLatestResponse>("Kur Hesaplanamadı");
         }
 
-        public async Task<IDictionary<string, string>> GetSupportedCurrencies()
+        public async Task<IDataResult<IDictionary<string, string>>> GetSupportedCurrencies()
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
             var httpResponseMessage = await httpClient.GetAsync($"symbols");
@@ -71,9 +57,10 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
                 string contentStream = await httpResponseMessage.Content.ReadAsStringAsync();
                 var parseObject = JsonDocument.Parse(contentStream);
                 var symbols = parseObject.RootElement.GetProperty("symbols").Deserialize<IDictionary<string, string>>();
-                return symbols;
+
+                return new SuccessDataResult<IDictionary<string, string>>(symbols,"Desteklenen Kurlar Listelendi");
             }
-            return null;
+            return new ErrorDataResult<IDictionary<string, string>>("Kurlar Listelenemedi");
         }
     }
 }
