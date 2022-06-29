@@ -25,3 +25,6 @@ C:\Users\ouzdev\source\repos\1-hafta-odev-ouzdev\CurrencyConverterAPI\CurrencyCo
 C:\Users\ouzdev\source\repos\1-hafta-odev-ouzdev\CurrencyConverterAPI\CurrencyConverterAPI\obj\Debug\net6.0\CurrencyConverterAPI.pdb
 C:\Users\ouzdev\source\repos\1-hafta-odev-ouzdev\CurrencyConverterAPI\CurrencyConverterAPI\obj\Debug\net6.0\CurrencyConverterAPI.genruntimeconfig.cache
 C:\Users\ouzdev\source\repos\1-hafta-odev-ouzdev\CurrencyConverterAPI\CurrencyConverterAPI\obj\Debug\net6.0\ref\CurrencyConverterAPI.dll
+C:\Users\ouzdev\source\repos\1-hafta-odev-ouzdev\CurrencyConverterAPI\CurrencyConverterAPI\bin\Debug\net6.0\FluentValidation.dll
+C:\Users\ouzdev\source\repos\1-hafta-odev-ouzdev\CurrencyConverterAPI\CurrencyConverterAPI\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+C:\Users\ouzdev\source\repos\1-hafta-odev-ouzdev\CurrencyConverterAPI\CurrencyConverterAPI\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll

@@ -30,10 +30,10 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
             return new ErrorDataResult<ExchangeRateResponse>("Kur Hesaplanamadı");
         }
 
-        public async Task<IDataResult<ExchangeLatestResponse>> GetLatestCurrency(string baseCurrency, string? symbols)
+        public async Task<IDataResult<ExchangeLatestResponse>> GetLatestCurrency(LatestCurrencyRate latestCurrencyRate)
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
-            var httpResponseMessage = await httpClient.GetAsync($"latest?symbols={symbols}&base={baseCurrency}");
+            var httpResponseMessage = await httpClient.GetAsync($"latest?symbols={latestCurrencyRate.Currencies}&base={latestCurrencyRate.BaseCurrency}");
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();

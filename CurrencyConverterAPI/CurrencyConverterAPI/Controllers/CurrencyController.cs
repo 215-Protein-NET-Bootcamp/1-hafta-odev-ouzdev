@@ -1,5 +1,6 @@
 ﻿using CurrencyConverterAPI.Adapters.ExchangeRatesService;
 using CurrencyConverterAPI.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyConverterAPI.Controllers
@@ -10,24 +11,25 @@ namespace CurrencyConverterAPI.Controllers
     {
         private readonly IExchangeRateService exchangeRateService;
 
-        public CurrencyController(IExchangeRateService exchangeRateService)
+        public CurrencyController(IExchangeRateService exchangeRateService, IValidator<ConvertCurrencyRate> validator)
         {
             this.exchangeRateService = exchangeRateService;
         }
 
-        [HttpPost]
+        [HttpGet("ConvertCurrency")]
         public async Task<IActionResult> ConvertCurrency([FromQuery]ConvertCurrencyRate currencyRate)
         {
             var response = await exchangeRateService.ConvertCurrency(currencyRate);
 
             return response.Success ? Ok(response) : BadRequest(response);
+           
         }
 
 
-        [HttpPost("LatestCurrency")]
-        public async Task<IActionResult> LatestCurrency([FromQuery] string baseCurrency,string? symbols)
+        [HttpGet("LatestCurrency")]
+        public async Task<IActionResult> LatestCurrency([FromQuery] LatestCurrencyRate latestCurrencyRate)
         {
-            var response = await exchangeRateService.GetLatestCurrency(baseCurrency, symbols);
+            var response = await exchangeRateService.GetLatestCurrency(latestCurrencyRate);
 
             return response.Success ? Ok(response) : BadRequest(response);
         }

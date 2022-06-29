@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "OJuiZFg/c7Tl8OJ560ELB4dwa4O2dq/X7RmTGYXUGy9vSc+CYlEgACWl+zxTODeD89AaeXT/kMxTcKfxZlwQ+Q==",
+  "dgSpecHash": "sP2CD0JFiJAzr69UYWU9StoVW8eIrPk/2tBclU6Rx+6VqaBgKlUnCTySPz2D7gLa6oBCzNRmGkEpoOsseTuUIA==",
   "success": true,
   "projectFilePath": "C:\\Users\\ouzdev\\source\\repos\\1-hafta-odev-ouzdev\\CurrencyConverterAPI\\CurrencyConverterAPI\\CurrencyConverterAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ouzdev\\.nuget\\packages\\fluentvalidation\\11.1.0\\fluentvalidation.11.1.0.nupkg.sha512",
+    "C:\\Users\\ouzdev\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.1.1\\fluentvalidation.aspnetcore.11.1.1.nupkg.sha512",
+    "C:\\Users\\ouzdev\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.1.0\\fluentvalidation.dependencyinjectionextensions.11.1.0.nupkg.sha512",
     "C:\\Users\\ouzdev\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\ouzdev\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.1.0\\microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512",
     "C:\\Users\\ouzdev\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\ouzdev\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.15.1\\microsoft.visualstudio.azure.containers.tools.targets.1.15.1.nupkg.sha512",
     "C:\\Users\\ouzdev\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",

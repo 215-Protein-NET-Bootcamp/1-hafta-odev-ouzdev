@@ -1,15 +1,16 @@
 using CurrencyConverterAPI.Adapters.ExchangeRatesService;
-using Microsoft.Net.Http.Headers;
+using CurrencyConverterAPI.Models;
+using CurrencyConverterAPI.ValidationRules.FluentValidation;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers()
+                .AddFluentValidation(c => 
+                c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddHttpClient("ExchangeRateData", httpClient =>
 {
     httpClient.BaseAddress = new Uri(builder.Configuration["CurrencyConverterService:APIURL"]);
@@ -20,7 +21,6 @@ builder.Services.AddScoped<IExchangeRateService, ExchangeRateManager>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
