@@ -5,7 +5,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using Serilog;
-
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
@@ -15,8 +15,11 @@ builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
     .WriteTo.File(@"logs\log.txt", rollingInterval: RollingInterval.Day));
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.Services.AddSwaggerGen(c=>
+{
+    c.ExampleFilters();
+});
+builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 builder.Services.AddHttpClient("ExchangeRateData", httpClient =>
 {
     httpClient.BaseAddress = new Uri(builder.Configuration["CurrencyConverterService:APIURL"]);

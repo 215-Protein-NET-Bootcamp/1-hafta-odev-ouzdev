@@ -1,7 +1,9 @@
 ﻿using CurrencyConverterAPI.Adapters.ExchangeRatesService;
 using CurrencyConverterAPI.Models;
+using CurrencyConverterAPI.Utilities.Result;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace CurrencyConverterAPI.Controllers
 {
@@ -11,34 +13,36 @@ namespace CurrencyConverterAPI.Controllers
     {
         private readonly IExchangeRateService exchangeRateService;
 
-        public CurrencyController(IExchangeRateService exchangeRateService, IValidator<ConvertCurrencyRate> validator)
+        public CurrencyController(IExchangeRateService exchangeRateService)
         {
             this.exchangeRateService = exchangeRateService;
         }
-
+       
         [HttpGet("ConvertCurrency")]
-        public async Task<IActionResult> ConvertCurrency([FromQuery]ConvertCurrencyRate currencyRate)
+        [ProducesResponseType(typeof(SuccessDataResult<ExchangeRateResponse>), 200)]
+        public async Task<IActionResult> ConvertCurrency([FromQuery] GetConvertCurrencyQueryObject currencyRate)
         {
             var response = await exchangeRateService.ConvertCurrency(currencyRate);
 
             return response.Success ? Ok(response) : BadRequest(response);
-           
         }
 
-
         [HttpGet("LatestCurrency")]
-        public async Task<IActionResult> LatestCurrency([FromQuery] LatestCurrencyRate latestCurrencyRate)
+        [ProducesResponseType(typeof(SuccessDataResult<ExchangeLatestResponse>), 200)]
+        public async Task<IActionResult> LatestCurrency([FromQuery] GetLatestCurrencyQueryObject latestCurrencyRate)
         {
             var response = await exchangeRateService.GetLatestCurrency(latestCurrencyRate);
 
             return response.Success ? Ok(response) : BadRequest(response);
+
         }
-        [HttpGet("SupporrtedCurrencies")]
-        public async Task<IActionResult> SupportedCurrencies()
-        {
+        [HttpGet("SupportedCurrencies")]
+        [ProducesResponseType(typeof(SuccessDataResult<IDictionary<string, string>>), 200)]
+        public async Task<DataResult<IDictionary<string,string>>> SupportedCurrencies()
+        {c
             var response = await exchangeRateService.GetSupportedCurrencies();
 
-            return response.Success ? Ok(response) : BadRequest(response);
+            return response.Success ? new SuccessDataResult<IDictionary<string, string>>(response.Data, response.Message) : new ErrorDataResult<IDictionary<string, string>>(response.Message); 
         }
     }
 }

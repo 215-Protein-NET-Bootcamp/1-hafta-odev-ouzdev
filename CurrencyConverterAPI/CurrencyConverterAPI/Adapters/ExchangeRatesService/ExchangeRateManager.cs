@@ -13,7 +13,7 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IDataResult<ExchangeRateResponse>> ConvertCurrency(ConvertCurrencyRate currencyRate)
+        public async Task<IDataResult<ExchangeRateResponse>> ConvertCurrency(GetConvertCurrencyQueryObject currencyRate)
         {
 
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
@@ -33,7 +33,7 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
             return new ErrorDataResult<ExchangeRateResponse>("Kur Hesaplanamadı");
         }
 
-        public async Task<IDataResult<ExchangeLatestResponse>> GetLatestCurrency(LatestCurrencyRate latestCurrencyRate)
+        public async Task<IDataResult<ExchangeLatestResponse>> GetLatestCurrency(GetLatestCurrencyQueryObject latestCurrencyRate)
         {
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
             var httpResponseMessage = await httpClient.GetAsync($"latest?symbols={latestCurrencyRate.Currencies}&base={latestCurrencyRate.BaseCurrency}");

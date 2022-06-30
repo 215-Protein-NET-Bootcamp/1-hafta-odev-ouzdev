@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace CurrencyConverterAPI.ValidationRules.FluentValidation
 {
-    public class LatestCurrencyValidator:AbstractValidator<LatestCurrencyRate>
+    public class LatestCurrencyValidator:AbstractValidator<GetLatestCurrencyQueryObject>
     {
         public LatestCurrencyValidator()
         {

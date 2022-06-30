@@ -1,6 +1,6 @@
 ﻿namespace CurrencyConverterAPI.Models
 {
-    public class ConvertCurrencyRate
+    public class GetConvertCurrencyQueryObject
     {
         public string? Amount { get; set; }
         public string? To { get; set; }

@@ -5,8 +5,8 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
 {
     public interface IExchangeRateService
     {
-        Task<IDataResult<ExchangeRateResponse>> ConvertCurrency(ConvertCurrencyRate currencyRate);
-        Task<IDataResult<ExchangeLatestResponse>> GetLatestCurrency(LatestCurrencyRate latestCurrencyRate);
+        Task<IDataResult<ExchangeRateResponse>> ConvertCurrency(GetConvertCurrencyQueryObject currencyRate);
+        Task<IDataResult<ExchangeLatestResponse>> GetLatestCurrency(GetLatestCurrencyQueryObject latestCurrencyRate);
         Task<IDataResult<IDictionary<string, string>>> GetSupportedCurrencies();
     }
 }
