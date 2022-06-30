@@ -17,14 +17,17 @@ namespace CurrencyConverterAPI.Adapters.ExchangeRatesService
         {
 
             var httpClient = _httpClientFactory.CreateClient("ExchangeRateData");
+
             var httpResponseMessage = await httpClient.GetAsync($"convert?to={currencyRate.To}&from={currencyRate.From}&amount={currencyRate.Amount}");
+            
+            
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
                 var parseObject = JsonDocument.Parse(contentStream);
                 var result = parseObject.RootElement.GetProperty("result").Deserialize<double>();
                 
-                return new SuccessDataResult<ExchangeRateResponse>(new ExchangeRateResponse { CalculatedRate = result,From = currencyRate.From,To=currencyRate.To },"Kur Hesaplaması Başarılı");
+                return new SuccessDataResult<ExchangeRateResponse>(new ExchangeRateResponse { CalculatedRate=result,To= currencyRate .To,From=currencyRate.From},"Kur Hesaplaması Başarılı");
             }
             
             return new ErrorDataResult<ExchangeRateResponse>("Kur Hesaplanamadı");

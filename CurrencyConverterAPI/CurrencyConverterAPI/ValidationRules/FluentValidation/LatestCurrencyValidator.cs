@@ -7,7 +7,7 @@ namespace CurrencyConverterAPI.ValidationRules.FluentValidation
     {
         public LatestCurrencyValidator()
         {
-            RuleFor(c => c.BaseCurrency).NotEmpty().MinimumLength(3).MaximumLength(3);
+            RuleFor(c => c.BaseCurrency).NotEmpty().Length(3);
             RuleFor(c => c.Currencies).Matches("^[a-zA-Z]+(,[a-zA-Z]+)*$");
         }
     }
