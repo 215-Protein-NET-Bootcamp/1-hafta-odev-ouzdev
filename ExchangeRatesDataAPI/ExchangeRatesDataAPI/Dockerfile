@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CurrencyConverterAPI.csproj", "."]
-RUN dotnet restore "./CurrencyConverterAPI.csproj"
+COPY ["ExchangeRatesDataAPI.csproj", "."]
+RUN dotnet restore "./ExchangeRatesDataAPI.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "CurrencyConverterAPI.csproj" -c Release -o /app/build
+RUN dotnet build "ExchangeRatesDataAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CurrencyConverterAPI.csproj" -c Release -o /app/publish
+RUN dotnet publish "ExchangeRatesDataAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet CurrencyConverterAPI.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet ExchangeRatesDataAPI.dll

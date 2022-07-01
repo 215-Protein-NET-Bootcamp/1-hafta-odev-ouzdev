@@ -21,11 +21,11 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Exchange Rates Data API",
         Version = "v1",
-        Description = "15 ve üzeri veri kaynaðýndan anlýk olarak 170 para biriminin kur deðerlerini getiren API projesidir." +
-        "Bu API, girilen miktarý, seçilen iki kura göre deðerini hesaplayan, seçilen para birimine göre diðer para birimlerinin deðerlerini getiren ve desteklenen tüm kurlarý listeleyen 3 tane endpointe sahiptir.",
+        Description = "15 ve Uzeri veri kaynagindan anlik olarak 170 para biriminin kur degerlerini getiren API projesidir." +
+        "Bu API, girilen miktari, secilen iki kura gore degerini hesaplayan, secilen para birimine göre diger para birimlerinin degerlerini getiren ve desteklenen tüm kurlari listeleyen 3 tane endpointe sahiptir.",
         Contact = new OpenApiContact
         {
-            Name = "Oðuzcan Genç",
+            Name = "Oguzcan Genc",
             Email = "oguzcangencc@hotmail.com",
             Url = new Uri("https://oguzcangenc.com"),
         }
