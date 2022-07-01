@@ -1,5 +1,5 @@
 # 1-Hafta-Odev
-Live Demo: [Dökümantasyona Gitmek İçin Tıklayınız...](https://exchange-rates-data-api.herokuapp.com/swagger/index.html)
+Live: [Dökümantasyona Gitmek İçin Tıklayınız...](https://exchange-rates-data-api.herokuapp.com/swagger/index.html)
 
 ## Technologies Used
 * Adapter Desing Pattern
