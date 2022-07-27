@@ -1,4 +1,4 @@
-# 1-Hafta-Odev
+# 1-Hafta-Odev- Oğuzcan Genç
 Live: [Dökümantasyona Gitmek İçin Tıklayınız...](https://exchange-rates-data-api.herokuapp.com/swagger/index.html)
 
 ## Technologies Used
