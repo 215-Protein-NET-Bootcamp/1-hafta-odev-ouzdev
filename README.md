@@ -1,6 +1,6 @@
-# 1-Hafta-Odev- Oğuzcan Genç
-Live: [Dökümantasyona Gitmek İçin Tıklayınız...](https://exchange-rates-data-api.herokuapp.com/swagger/index.html)
+# 1. Hafta Ödev - Oğuzcan Genç
 
+[![https://exchange-rates-data-api.herokuapp.com/swagger/index.html](https://github.com/215-Protein-NET-Bootcamp/1-hafta-odev-ouzdev/blob/main/live-demo-button.png)](https://exchange-rates-data-api.herokuapp.com/swagger/index.html)
 ## Technologies Used
 * Adapter Desing Pattern
 * ASP.Net 6.0 
